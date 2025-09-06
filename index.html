@@ -367,10 +367,10 @@
                 <i class="fas fa-file-pdf text-2xl"></i>
                 <span class="tooltip absolute right-14 bg-black/70 text-white text-xs px-2 py-1 rounded-md opacity-0 transform -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0 whitespace-nowrap">Download Program</span>
             </a>
-            <a href="https://drive.google.com/drive/folders/1ot2LUqfjQon1B4JSL7FoBwQHCxqMjGqT?usp=sharing" target="_blank" class="cta-btn bg-[var(--peach)] text-[var(--dark-text)] w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform relative group">
+            <button id="cta-upload-button" class="cta-btn bg-[var(--peach)] text-[var(--dark-text)] w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform relative group">
                 <i class="fas fa-camera text-2xl"></i>
                 <span class="tooltip absolute right-14 bg-black/70 text-white text-xs px-2 py-1 rounded-md opacity-0 transform -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0 whitespace-nowrap">Share Photos</span>
-            </a>
+            </button>
         </div>
         
         <!-- Main CTA Toggle Button -->
@@ -547,6 +547,15 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
 
+
+            // --- CTA UPLOAD BUTTON ---
+            const ctaUploadButton = document.getElementById('cta-upload-button');
+            if (ctaUploadButton) {
+                const widget = uploadcare.Widget('[role=uploadcare-uploader]');
+                ctaUploadButton.addEventListener('click', () => {
+                    widget.openDialog();
+                });
+            }
 
             // --- SCROLL-REVEAL ANIMATIONS ---
             const revealElements = document.querySelectorAll('.reveal');
