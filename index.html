@@ -19,6 +19,9 @@
     <!-- Leaflet CSS for Map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 
+    <!-- Uploadcare Widget -->
+    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js" charset="utf-8"></script>
+
     <style>
         /* Custom styles combining both designs */
         :root {
@@ -255,14 +258,16 @@
             <div class="container mx-auto px-6 text-center">
                 <h2 class="font-display text-4xl sm:text-5xl md:text-6xl mb-4 reveal">Share Our Joy</h2>
                 <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal"></div>
-                <p class="max-w-2xl mx-auto mb-8 text-lg reveal">Help us capture every special moment! Please upload your photos and videos from our wedding day to our shared Google Drive folder.</p>
-                <div class="reveal">
-                    <!-- ACTION REQUIRED: Replace '#' with your actual Google Drive shared folder link -->
-                    <a href="https://drive.google.com/drive/folders/1ot2LUqfjQon1B4JSL7FoBwQHCxqMjGqT?usp=sharing" target="_blank" class="bg-[var(--gold)] text-white font-bold py-4 px-10 rounded-full hover:bg-yellow-500 transition-colors duration-300 shadow-lg inline-flex items-center gap-3 text-lg">
-                        <i class="fab fa-google-drive"></i>
-                        Upload to Google Drive
-                    </a>
-                    
+                <p class="max-w-2xl mx-auto mb-8 text-lg reveal">Help us capture every special moment! Please upload your photos and videos from our wedding day. Large images will be automatically resized to ensure a smooth upload.</p>
+                <div class="reveal max-w-lg mx-auto">
+                    <input type="hidden" role="uploadcare-uploader"
+                           data-public-key="24c0c3526246451b3eac"
+                           data-multiple="true"
+                           data-multiple-max="20"
+                           data-image-shrink="2048x2048"
+                           data-tabs="file camera url facebook gdrive dropbox instagram"
+                           data-effects="crop,rotate,mirror,flip,enhance,grayscale,sharp"
+                           />
                 </div>
             </div>
         </section>
