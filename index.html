@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ginna & Emmanuel's Wedding</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Leaflet CSS for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+    <style>
+        /* Custom styles combining both designs */
+        :root {
+            --emerald: #50C878;
+            --peach: #FFDAB9;
+            --gold: #FFD700;
+            --dark-text: #333333;
+            --light-text: #777777;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark-text);
+            background-color: #f9f9f9;
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Scroll-reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Particle animations for invitation card */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            top: -20px;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes float {
+           0% { transform: translateY(0px) rotate(0deg); }
+           50% { transform: translateY(-30px) rotate(180deg); }
+           100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        /* Tooltip for floating buttons */
+        .cta-btn:hover .tooltip, .scroll-top-btn:hover .tooltip {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-white/90 backdrop-blur-sm p-4 fixed top-0 left-0 right-0 z-50 transition-all duration-300 shadow-md">
+        <nav class="container mx-auto flex justify-between items-center">
+            <a href="#hero" class="font-display text-2xl md:text-3xl tracking-wider text-[var(--emerald)] font-bold">G&E</a>
+            <ul class="hidden lg:flex space-x-6 text-sm uppercase tracking-widest">
+                <li><a href="#hero" class="hover:text-[var(--emerald)] transition font-medium">Home</a></li>
+                <li><a href="#invitation" class="hover:text-[var(--emerald)] transition font-medium">Invitation</a></li>
+                <li><a href="#details" class="hover:text-[var(--emerald)] transition font-medium">Details</a></li>
+                <li><a href="#location" class="hover:text-[var(--emerald)] transition font-medium">Direction</a></li>
+                <li><a href="#gallery" class="hover:text-[var(--emerald)] transition font-medium">Gallery</a></li>
+                <li><a href="#share-photos" class="hover:text-[var(--emerald)] transition font-medium">Share Photos</a></li>
+                <li><a href="#support" class="hover:text-[var(--emerald)] transition font-medium">Support</a></li>
+                <li><a href="#" id="program-link-desktop" download="Wedding_Program.pdf" class="hover:text-[var(--emerald)] transition font-medium">Program</a></li>
+                <li><a href="#rsvp" class="hover:text-[var(--emerald)] transition font-medium">RSVP</a></li>
+            </ul>
+            <button id="mobile-menu-button" class="lg:hidden focus:outline-none text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden fixed inset-0 bg-black/90 z-40 flex flex-col items-center justify-center space-y-8 text-white uppercase text-lg">
+        <button id="close-mobile-menu" class="absolute top-6 right-6 text-4xl">&times;</button>
+        <a href="#hero" class="mobile-menu-link">Home</a>
+        <a href="#invitation" class="mobile-menu-link">Invitation</a>
+        <a href="#details" class="mobile-menu-link">Details</a>
+        <a href="#location" class="mobile-menu-link">Direction</a>
+        <a href="#gallery" class="mobile-menu-link">Gallery</a>
+        <a href="#share-photos" class="mobile-menu-link">Share Photos</a>
+        <a href="#support" class="mobile-menu-link">Support</a>
+        <a href="#" id="program-link-mobile" download="Wedding_Program.pdf" class="mobile-menu-link">Program</a>
+        <a href="#rsvp" class="mobile-menu-link">RSVP</a>
+    </div>
+
+    <!-- Hero Section -->
+    <!-- ACTION REQUIRED: Create a folder named 'pics' and place an image named 'hero-background.jpg' inside it. -->
+    <section id="hero" class="h-screen bg-cover bg-center flex flex-col justify-center items-center text-white text-center px-4 relative" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('pics/bg.jpg');">
+        <h1 class="font-display text-5xl md:text-8xl mb-4 reveal">Ginna & Emmanuel</h1>
+        <p class="text-xl md:text-2xl mb-8 reveal" style="transition-delay: 200ms;">December 20, 2025 • Abuja, Nigeria</p>
+        
+        <!-- Countdown Timer -->
+        <div id="countdown" class="grid grid-cols-4 gap-4 md:gap-8 max-w-2xl mx-auto reveal" style="transition-delay: 400ms;">
+            <div class="bg-white/20 backdrop-blur-sm rounded-lg p-4 min-w-[80px]">
+                <div id="days" class="text-4xl md:text-6xl font-bold font-display">00</div>
+                <div class="text-xs uppercase">Days</div>
+            </div>
+            <div class="bg-white/20 backdrop-blur-sm rounded-lg p-4 min-w-[80px]">
+                <div id="hours" class="text-4xl md:text-6xl font-bold font-display">00</div>
+                <div class="text-xs uppercase">Hours</div>
+            </div>
+            <div class="bg-white/20 backdrop-blur-sm rounded-lg p-4 min-w-[80px]">
+                <div id="minutes" class="text-4xl md:text-6xl font-bold font-display">00</div>
+                <div class="text-xs uppercase">Minutes</div>
+            </div>
+            <div class="bg-white/20 backdrop-blur-sm rounded-lg p-4 min-w-[80px]">
+                <div id="seconds" class="text-4xl md:text-6xl font-bold font-display">00</div>
+                <div class="text-xs uppercase">Seconds</div>
+            </div>
+        </div>
+        <a href="#invitation" class="absolute bottom-8 text-2xl animate-bounce"><i class="fas fa-chevron-down"></i></a>
+    </section>
+
+    <main>
+        <!-- Invitation Card Section -->
+        <section id="invitation" class="py-20 md:pb-16 bg-gray-50">
+            <div class="container mx-auto px-6 max-w-4xl">
+                 <div class="bg-white p-8 md:p-12 rounded-lg shadow-xl relative overflow-hidden text-center reveal">
+                    <div id="particle-container" class="absolute inset-0 pointer-events-none"></div>
+                    <h2 class="font-display text-3xl text-[var(--emerald)] mb-8">The Families of</h2>
+                    <div class="flex flex-col md:flex-row justify-center items-center gap-8 mb-8">
+                        <div class="text-center">
+                            <h3 class="font-display text-xl font-bold">Mr & Mrs. Sunny Ugwunna Nwankpa</h3>
+                            <p class="text-sm text-[var(--light-text)]">Osaa-Ukwu, Obingwa LGA, Abia State</p>
+                        </div>
+                        <div class="font-display text-2xl text-[var(--gold)]">&</div>
+                        <div class="text-center">
+                            <h3 class="font-display text-xl font-bold">Mr & Mrs. Omolewu Sunday Ayodele</h3>
+                            <p class="text-sm text-[var(--light-text)]">Oke Lamure, Ijebu-Ode LGA, Ogun State</p>
+                        </div>
+                    </div>
+                    <p class="italic text-[var(--light-text)] max-w-2xl mx-auto my-8">Cordially invite you to the wedding solemnization of their beloved children</p>
+                    <div class="couple-names">
+                        <h3 class="font-display text-5xl mb-2">Ginna Adaugo Nwankpa</h3>
+                        <div class="font-display text-4xl text-[var(--gold)] my-2">&</div>
+                        <h3 class="font-display text-5xl">Emmanuel Dada Omolewu</h3>
+                    </div>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Details Section -->
+        <section id="details" class="pt-16 md:pt-20 pb-20 md:pb-28 bg-gray-50">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="font-display text-5xl md:text-6xl mb-4 reveal">Wedding Details</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal"></div>
+                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <!-- Event Details -->
+                    <div class="bg-white p-8 rounded-lg shadow-lg text-center reveal">
+                        <i class="fas fa-calendar-alt text-4xl text-[var(--emerald)] mb-4"></i>
+                        <h3 class="font-display text-3xl mb-4">Date & Time</h3>
+                        <p class="font-bold text-lg">December 20, 2025</p>
+                        <p class="text-lg">12:00 PM</p>
+                    </div>
+                     <div id="venueCard" class="bg-white p-8 rounded-lg shadow-lg text-center reveal cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                        <i class="fas fa-map-marker-alt text-4xl text-[var(--emerald)] mb-4"></i>
+                        <h3 class="font-display text-3xl mb-4">Venue</h3>
+                        <p class="font-bold text-lg">Multipurpose Hall, Glisten International Academy</p>
+                        <p class="text-lg">Plot 1457, Cadastral Zone B8, Jahi District, FCT- Abuja</p>
+                    </div>
+                </div>
+                <!-- Wedding Colors -->
+                 <div class="mt-20 reveal">
+                     <h2 class="font-display text-4xl md:text-5xl mb-4">Our Wedding Colors</h2>
+                     <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12"></div>
+                     <div class="flex justify-center flex-wrap gap-6">
+                        <div class="relative group">
+                           <div class="w-24 h-24 rounded-full bg-[#FFDAB9] shadow-md transition-transform duration-300 group-hover:scale-110"></div>
+                           <p class="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-8 left-1/2 -translate-x-1/2 bg-black/70 text-white px-2 py-1 rounded text-sm">Peach</p>
+                        </div>
+                         <div class="relative group">
+                           <div class="w-24 h-24 rounded-full bg-white border-2 border-gray-200 shadow-md transition-transform duration-300 group-hover:scale-110"></div>
+                            <p class="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-8 left-1/2 -translate-x-1/2 bg-black/70 text-white px-2 py-1 rounded text-sm">White</p>
+                        </div>
+                         <div class="relative group">
+                           <div class="w-24 h-24 rounded-full bg-[#FFD700] shadow-md transition-transform duration-300 group-hover:scale-110"></div>
+                           <p class="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-8 left-1/2 -translate-x-1/2 bg-black/70 text-white px-2 py-1 rounded text-sm">Gold</p>
+                        </div>
+                         <div class="relative group">
+                           <div class="w-24 h-24 rounded-full bg-[#50C878] shadow-md transition-transform duration-300 group-hover:scale-110"></div>
+                           <p class="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-8 left-1/2 -translate-x-1/2 bg-black/70 text-white px-2 py-1 rounded text-sm">Emerald Green</p>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Toast Section -->
+        <section id="toast" class="py-20 md:py-28 bg-white">
+             <div class="container mx-auto px-6 text-center max-w-4xl">
+                 <h2 class="font-display text-5xl md:text-6xl mb-4 reveal">Our Toast</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal"></div>
+                <p class="text-lg md:text-xl leading-relaxed mb-6 reveal">Like a tree planted by rivers of living water, may our love know no season, ever growing, ever flourishing, ever green. Rooted in grace, nurtured by faith, we toast to a lifetime of unshakable love.</p>
+                <p class="font-display text-3xl text-[var(--emerald)] reveal">Cheers to forever.</p>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="font-display text-5xl md:text-6xl mb-4 reveal">Our Journey</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal"></div>
+                <!-- ACTION REQUIRED: Place your images in the 'pics' folder and name them gallery-1.jpg, gallery-2.jpg, etc. -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="reveal"><img src="pics/a.jpg" alt="Photo 1" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
+                    <div class="reveal"><img src="pics/b.jpg" alt="Photo 2" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
+                    <div class="reveal"><img src="pics/c.jpg" alt="Photo 3" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
+                    <div class="reveal"><img src="pics/d.jpg" alt="Photo 4" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
+                    <div class="reveal"><img src="pics/f.jpg" alt="Photo 5" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
+                    <div class="reveal"><img src="pics/e.jpg" alt="Photo 6" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
+                    <div class="reveal"><img src="pics/h.jpg" alt="Photo 7" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
+                    <div class="reveal"><img src="pics/i.jpg" alt="Photo 8" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Gallery Lightbox Modal -->
+        <div id="lightbox" class="hidden fixed inset-0 bg-black/90 z-[9999] flex justify-center items-center p-4">
+            <img id="lightbox-img" src="" alt="Enlarged photo" class="max-w-full max-h-full rounded-lg">
+            <button id="lightbox-close" class="absolute top-6 right-6 text-white text-4xl">&times;</button>
+        </div>
+
+        <!-- Share Photos Section -->
+        <section id="share-photos" class="py-20 md:py-28 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="font-display text-5xl md:text-6xl mb-4 reveal">Share Our Joy</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal"></div>
+                <p class="max-w-2xl mx-auto mb-8 text-lg reveal">Help us capture every special moment! Please upload your photos and videos from our wedding day to our shared Google Drive folder.</p>
+                <div class="reveal">
+                    <!-- ACTION REQUIRED: Replace '#' with your actual Google Drive shared folder link -->
+                    <a href="https://drive.google.com/drive/folders/1ot2LUqfjQon1B4JSL7FoBwQHCxqMjGqT?usp=sharing" target="_blank" class="bg-[var(--gold)] text-white font-bold py-4 px-10 rounded-full hover:bg-yellow-500 transition-colors duration-300 shadow-lg inline-flex items-center gap-3 text-lg">
+                        <i class="fab fa-google-drive"></i>
+                        Upload to Google Drive
+                    </a>
+                    
+                </div>
+            </div>
+        </section>
+
+         <!-- Location Map Section -->
+        <section id="location" class="py-20 md:py-28">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="font-display text-5xl md:text-6xl mb-4 reveal">Location</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal"></div>
+                <div class="max-w-4xl mx-auto reveal">
+                     <div class="h-[500px] rounded-lg shadow-xl relative overflow-hidden">
+                        <div id="map" class="h-full w-full"></div>
+                        <div class="absolute top-4 right-4 bg-white p-2 rounded-lg shadow-lg z-20 text-center">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://maps.app.goo.gl/2iprf3m1tnUaNgrNA" alt="Venue QR Code" class="w-28 h-28">
+                            <p class="text-xs mt-1">Scan to locate</p>
+                        </div>
+                    </div>
+                    <div class="text-center mt-6">
+                         <a href="https://maps.app.goo.gl/2iprf3m1tnUaNgrNA" target="_blank" class="bg-[var(--emerald)] text-white font-bold py-3 px-6 rounded-full hover:bg-green-600 transition-colors shadow-lg inline-flex items-center gap-2">
+                            <i class="fas fa-directions"></i> Get Directions
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support & Prayers Section -->
+        <section id="support" class="py-20 md:py-28 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="font-display text-5xl md:text-6xl mb-4 reveal">Support & Prayers</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal"></div>
+                <p class="max-w-3xl mx-auto mb-12 text-lg reveal">Your presence at our wedding is the greatest gift we could ask for. However, if you wish to bless our new beginning with a gift, you may do so here. We are deeply grateful for your love and support.</p>
+                <div class="max-w-md mx-auto bg-gray-50 p-8 rounded-lg shadow-lg reveal border-t-4 border-[var(--emerald)]">
+                    <div class="text-left space-y-4">
+                        <div>
+                            <p class="text-sm text-gray-500">Bank Name</p>
+                            <p class="font-bold text-xl">OPAY</p>
+                        </div>
+                         <div>
+                            <p class="text-sm text-gray-500">Account Name</p>
+                            <p class="font-bold text-xl">Ginna Nwankpa</p>
+                        </div>
+                         <div>
+                            <p class="text-sm text-gray-500">Account Number</p>
+                            <div class="flex items-center justify-between">
+                                <p id="account-number" class="font-bold text-xl tracking-widest">8066129671</p>
+                                <button id="copy-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-3 rounded-lg text-sm inline-flex items-center gap-2 transition-colors">
+                                    <i class="far fa-copy"></i>
+                                    <span id="copy-btn-text">Copy</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP Section -->
+        <section id="rsvp" class="py-20 md:py-32">
+             <div class="container mx-auto px-6 text-center">
+                <h2 class="font-display text-5xl md:text-6xl mb-4 reveal">RSVP</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal"></div>
+                <p class="max-w-2xl mx-auto mb-8 text-lg reveal">We can't wait to celebrate with you! Please let us know if you'll be joining our special day.</p>
+                <div class="max-w-4xl mx-auto reveal">
+                    <!-- Google Form Embed -->
+                    <div class="aspect-w-1 aspect-h-1 md:aspect-w-3 md:aspect-h-2">
+                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScW-BI6vzLu7Rxb8KJJPCAV1ruKUJWmE_LSJ_XlECyYwkaFhw/viewform?embedded=true" width="920" height="650" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-[var(--dark-text)] text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="font-display text-4xl mb-4">#GEForever</h2>
+            <p>© 2025 Ginna & Emmanuel's Wedding. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Floating CTA & Scroll to Top Buttons -->
+    <div class="fixed bottom-5 right-5 z-40 flex flex-col items-center gap-4">
+        <!-- Scroll to Top -->
+        <button id="scroll-top-btn" class="w-12 h-12 bg-white text-[var(--emerald)] rounded-full shadow-lg flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:scale-110">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+
+        <!-- CTA Menu Buttons (initially hidden) -->
+        <div id="cta-buttons" class="flex flex-col items-center gap-4 hidden transition-all duration-300">
+            <a href="https://wa.me/2348129147075" target="_blank" class="cta-btn bg-[#25D366] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform relative group">
+                <i class="fab fa-whatsapp text-2xl"></i>
+                <span class="tooltip absolute right-14 bg-black/70 text-white text-xs px-2 py-1 rounded-md opacity-0 transform -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0 whitespace-nowrap">Chat with us</span>
+            </a>
+            <a href="#" id="program-link-cta" download="Wedding_Program.pdf" class="cta-btn bg-[var(--gold)] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform relative group">
+                <i class="fas fa-file-pdf text-2xl"></i>
+                <span class="tooltip absolute right-14 bg-black/70 text-white text-xs px-2 py-1 rounded-md opacity-0 transform -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0 whitespace-nowrap">Download Program</span>
+            </a>
+            <a href="https://drive.google.com/drive/folders/1ot2LUqfjQon1B4JSL7FoBwQHCxqMjGqT?usp=sharing" target="_blank" class="cta-btn bg-[var(--peach)] text-[var(--dark-text)] w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform relative group">
+                <i class="fas fa-camera text-2xl"></i>
+                <span class="tooltip absolute right-14 bg-black/70 text-white text-xs px-2 py-1 rounded-md opacity-0 transform -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0 whitespace-nowrap">Share Photos</span>
+            </a>
+        </div>
+        
+        <!-- Main CTA Toggle Button -->
+         <button id="cta-main-btn" class="w-16 h-16 rounded-full bg-[var(--emerald)] text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform relative">
+            <i class="fas fa-plus text-2xl transition-transform duration-300"></i>
+        </button>
+    </div>
+
+    <!-- Leaflet JS for Map -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- CONFIGURATION ---
+            const weddingDate = new Date('December 20, 2025 10:00:00').getTime();
+            const mapCoordinates = [9.1023, 7.4227]; // Approx. coords for Jahi, Abuja
+
+            // --- MOBILE MENU ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const closeMobileMenuButton = document.getElementById('close-mobile-menu');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+            const hamburgerIcon = mobileMenuButton.querySelector('i');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                hamburgerIcon.classList.toggle('fa-bars');
+                hamburgerIcon.classList.toggle('fa-times');
+            });
+            closeMobileMenuButton.addEventListener('click', () => {
+                 mobileMenu.classList.add('hidden');
+                 hamburgerIcon.classList.add('fa-bars');
+                 hamburgerIcon.classList.remove('fa-times');
+            });
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    // Do not hide menu for download link, let browser handle it
+                    if(!link.hasAttribute('download')) {
+                        mobileMenu.classList.add('hidden');
+                        hamburgerIcon.classList.add('fa-bars');
+                        hamburgerIcon.classList.remove('fa-times');
+                    }
+                });
+            });
+
+            // --- COUNTDOWN TIMER ---
+            const daysEl = document.getElementById('days'), hoursEl = document.getElementById('hours'), minutesEl = document.getElementById('minutes'), secondsEl = document.getElementById('seconds');
+            const timer = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = weddingDate - now;
+                if (distance < 0) {
+                    clearInterval(timer);
+                    document.getElementById('countdown').innerHTML = `<div class="col-span-4 text-center"><h3 class="text-4xl font-display">We're Married!</h3></div>`;
+                    return;
+                }
+                daysEl.innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                hoursEl.innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                minutesEl.innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                secondsEl.innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            }, 1000);
+
+            // --- INVITATION PARTICLE ANIMATION ---
+            const particleContainer = document.getElementById('particle-container');
+            if (particleContainer) {
+                const particles = 50;
+                const symbols = ['❤', '❀', '✨'];
+                const colors = ['var(--gold)', 'var(--peach)', '#ff6b6b'];
+                for (let i = 0; i < particles; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    const isSymbol = Math.random() > 0.7;
+                    if (isSymbol) {
+                        particle.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+                        particle.style.fontSize = `${12 + Math.random() * 8}px`;
+                    } else {
+                        particle.style.width = `${4 + Math.random() * 4}px`;
+                        particle.style.height = particle.style.width;
+                    }
+                    particle.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.left = `${Math.random() * 100}%`;
+                    const animDuration = 8 + Math.random() * 10;
+                    const animDelay = Math.random() * 10;
+                    particle.style.animation = `${isSymbol ? 'float' : 'fall'} ${animDuration}s ${animDelay}s linear infinite`;
+                    particleContainer.appendChild(particle);
+                }
+            }
+            
+            // --- VENUE CARD CLICK ---
+            const venueCard = document.getElementById('venueCard');
+            if(venueCard) {
+                venueCard.addEventListener('click', () => {
+                    document.getElementById('location').scrollIntoView({ behavior: 'smooth' });
+                });
+            }
+
+            // --- LEAFLET MAP ---
+            const mapElement = document.getElementById('map');
+            if(mapElement) {
+                const map = L.map('map').setView(mapCoordinates, 15);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    zIndex: 1
+                }).addTo(map);
+                const customIcon = L.divIcon({
+                    className: 'custom-div-icon',
+                    html: `<div style="background-color: var(--peach); width: 3rem; height: 3rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.3);"><i class="fas fa-heart text-[var(--emerald)] text-xl"></i></div>`,
+                    iconSize: [30, 42],
+                    iconAnchor: [15, 42]
+                });
+                L.marker(mapCoordinates, {icon: customIcon, zIndexOffset: 1000}).addTo(map)
+                    .bindPopup('<b>Glisten International Academy</b><br>Our Wedding Venue').openPopup();
+            }
+
+            // --- GALLERY LIGHTBOX ---
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const lightbox = document.getElementById('lightbox'), lightboxImg = document.getElementById('lightbox-img'), lightboxClose = document.getElementById('lightbox-close');
+            galleryItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    lightbox.classList.remove('hidden');
+                    lightboxImg.src = item.src;
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            const closeLightbox = () => {
+                lightbox.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            };
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => e.target === lightbox && closeLightbox());
+
+            // --- ACCOUNT NUMBER COPY BUTTON ---
+            const copyBtn = document.getElementById('copy-btn');
+            if(copyBtn) {
+                copyBtn.addEventListener('click', function() {
+                    const accountNumber = document.getElementById('account-number').innerText;
+                    const copyBtnText = document.getElementById('copy-btn-text');
+                    navigator.clipboard.writeText(accountNumber).then(() => {
+                        copyBtnText.innerText = 'Copied!';
+                        copyBtn.classList.add('bg-green-500', 'text-white');
+                        copyBtn.classList.remove('bg-gray-200', 'text-gray-700');
+                        setTimeout(() => {
+                            copyBtnText.innerText = 'Copy';
+                            copyBtn.classList.remove('bg-green-500', 'text-white');
+                            copyBtn.classList.add('bg-gray-200', 'text-gray-700');
+                        }, 2000);
+                    });
+                });
+            }
+
+            // --- FLOATING CTA & SCROLL-TO-TOP BUTTONS ---
+            const ctaMainBtn = document.getElementById('cta-main-btn');
+            const ctaIcon = ctaMainBtn.querySelector('i');
+            const ctaButtons = document.getElementById('cta-buttons');
+            const scrollTopBtn = document.getElementById('scroll-top-btn');
+
+            ctaMainBtn.addEventListener('click', () => {
+                ctaButtons.classList.toggle('hidden');
+                ctaButtons.classList.toggle('flex');
+                ctaIcon.classList.toggle('rotate-45');
+            });
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    scrollTopBtn.classList.add('opacity-100', 'pointer-events-auto');
+                    scrollTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+                } else {
+                    scrollTopBtn.classList.remove('opacity-100', 'pointer-events-auto');
+                    scrollTopBtn.classList.add('opacity-0', 'pointer-events-none');
+                }
+            });
+
+            scrollTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+
+            // --- SCROLL-REVEAL ANIMATIONS ---
+            const revealElements = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            revealElements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
