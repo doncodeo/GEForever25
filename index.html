@@ -240,6 +240,10 @@
                     <div class="reveal"><img src="pics/e.jpg" alt="Photo 6" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
                     <div class="reveal"><img src="pics/h.jpg" alt="Photo 7" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
                     <div class="reveal"><img src="pics/i.jpg" alt="Photo 8" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
+                    <div class="reveal"><img src="pics/l.jpg" alt="Photo 9" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
+                    <div class="reveal"><img src="pics/m.jpg" alt="Photo 10" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
+                    <div class="reveal"><img src="pics/n.jpg" alt="Photo 11" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
+
                 </div>
             </div>
         </section>
@@ -312,6 +316,8 @@
                                     <span id="copy-btn-text">Copy</span>
                                 </button>
                             </div>
+                            <p class="mt-2 text-sm text-gray-500 font-semibold">Description:</p>
+                            <p class="text-xl font-mono text-[var(--emerald)]">#GEForever</p>
                         </div>
                     </div>
                 </div>
@@ -323,12 +329,26 @@
             <div class="container mx-auto px-6 text-center">
                 <h2 class="font-display text-4xl sm:text-5xl md:text-6xl mb-4 reveal">Kindly RSVP</h2>
                 <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal"></div>
-                <p class="max-w-3xl mx-auto mb-12 text-lg reveal">Your presence is a gift to us! Please let us know if you can make it by December 1st, 2025. You can RSVP by calling one of our reps or by filling out the form below.</p>
+                <p class="max-w-3xl mx-auto mb-12 text-lg reveal">Your presence is a gift to us! Please let us know if you can make it by December 13TH, 2025.</p>
 
                 <div class="max-w-4xl mx-auto reveal">
                     <!-- RSVP by Phone -->
                     <h3 class="font-display text-3xl mb-8">RSVP by Phone</h3>
                     <div class="grid md:grid-cols-2 gap-8 mb-16">
+                        <div class="bg-white p-6 rounded-lg shadow-lg flex items-center gap-4 border-l-4 border-[var(--emerald)]">
+                            <i class="fas fa-phone-alt text-3xl text-[var(--emerald)]"></i>
+                            <div>
+                                <p class="font-bold text-xl">Dada</p>
+                                <a href="tel:+2349070836793" class="text-lg text-[var(--dark-text)] hover:text-[var(--emerald)] transition-colors">+234 812 914 7075</a>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-lg flex items-center gap-4 border-l-4 border-[var(--emerald)]">
+                            <i class="fas fa-phone-alt text-3xl text-[var(--emerald)]"></i>
+                            <div>
+                                <p class="font-bold text-xl">Ginna</p>
+                                <a href="tel:+2349070836793" class="text-lg text-[var(--dark-text)] hover:text-[var(--emerald)] transition-colors">+234 806 612 9671</a>
+                            </div>
+                        </div>
                         <div class="bg-white p-6 rounded-lg shadow-lg flex items-center gap-4 border-l-4 border-[var(--emerald)]">
                             <i class="fas fa-phone-alt text-3xl text-[var(--emerald)]"></i>
                             <div>
@@ -581,7 +601,55 @@
                 });
             }, { threshold: 0.1 });
             revealElements.forEach(el => observer.observe(el));
+
+            // ...existing code...
+// --- COUNTDOWN POPUP ---
+const countdownPopup = document.getElementById('countdown-popup');
+const popupMessage = document.getElementById('popup-message');
+const popupCloseButton = document.getElementById('popup-close');
+
+function showCountdownPopup() {
+    const now = new Date().getTime();
+    const distance = weddingDate - now;
+    if (distance <= 0) return; // Don't show if the wedding date has passed
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    popupMessage.innerText = `Only ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds to our wedding!`;
+    countdownPopup.classList.remove('opacity-0', 'pointer-events-none');
+    countdownPopup.classList.add('opacity-100', 'pointer-events-auto');
+
+    setTimeout(() => {
+        countdownPopup.classList.remove('opacity-100', 'pointer-events-auto');
+        countdownPopup.classList.add('opacity-0', 'pointer-events-none');
+    }, 10000); // Hide after 10 seconds
+}
+
+// Show popup after 2 seconds (so page loads first)
+setTimeout(showCountdownPopup, 2000);
+
+// Show popup every 5 hours (18000000 ms)
+setInterval(showCountdownPopup, 18000000);
+
+// Close button
+popupCloseButton.addEventListener('click', () => {
+    countdownPopup.classList.remove('opacity-100', 'pointer-events-auto');
+    countdownPopup.classList.add('opacity-0', 'pointer-events-none');
+});
+
         });
     </script>
+
+    <!-- Countdown Popup -->
+    <div id="countdown-popup" class="fixed bottom-8 right-8 z-[99999] bg-white border border-[var(--emerald)] shadow-xl rounded-lg px-6 py-4 flex items-center gap-4 transition-all duration-300 opacity-0 pointer-events-none">
+        <i class="fas fa-clock text-2xl text-[var(--emerald)]"></i>
+        <div>
+            <p id="popup-message" class="font-bold text-lg text-[var(--emerald)]"></p>
+        </div>
+        <button id="popup-close" class="ml-4 text-gray-400 hover:text-[var(--emerald)] text-2xl leading-none">&times;</button>
+    </div>
 </body>
 </html>
