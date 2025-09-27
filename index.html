@@ -1,23 +1,44 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Ginna & Emmanuel's Wedding - #GEForever">
+    <meta property="og:description"
+        content="Join us on December 13, 2025, in Abuja, Nigeria, to celebrate the union of Ginna & Emmanuel. #GEForever">
+    <meta property="og:image" content="https://gosortplux.com/geforever/pics/bg.jpg">
+    <meta property="og:url" content="https://gosortplux.com/geforever">
+    <meta property="og:type" content="website">
+
+    <!-- WhatsApp & Mobile Friendly -->
+    <meta name="description"
+        content="Join us on December 13, 2025, in Abuja, Nigeria, to celebrate the union of Ginna & Emmanuel. #GEForever">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ginna & Emmanuel's Wedding - #GEForever">
+    <meta name="twitter:description"
+        content="Join us on December 13, 2025, in Abuja, Nigeria, to celebrate the union of Ginna & Emmanuel.">
+    <meta name="twitter:image" content="https://gosortplux.com/geforever/pics/bg.jpg">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ginna & Emmanuel's Wedding</title>
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;500&display=swap"
+        rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/pics/gd.png">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Leaflet CSS for Map -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
     <style>
         /* Custom styles combining both designs */
@@ -34,7 +55,7 @@
             color: var(--dark-text);
             background-color: #f9f9f9;
         }
-        
+
         .font-display {
             font-family: 'Playfair Display', serif;
         }
@@ -45,6 +66,7 @@
             transform: translateY(30px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
+
         .reveal.visible {
             opacity: 1;
             transform: translateY(0);
@@ -60,37 +82,54 @@
         }
 
         @keyframes fall {
-            to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         @keyframes float {
-           0% { transform: translateY(0px) rotate(0deg); }
-           50% { transform: translateY(-30px) rotate(180deg); }
-           100% { transform: translateY(0px) rotate(0deg); }
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-30px) rotate(180deg);
+            }
+
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
         }
 
         /* Tooltip for floating buttons */
-        .cta-btn:hover .tooltip, .scroll-top-btn:hover .tooltip {
+        .cta-btn:hover .tooltip,
+        .scroll-top-btn:hover .tooltip {
             opacity: 1;
             transform: translateX(0);
         }
     </style>
 </head>
+
 <body class="antialiased">
 
     <!-- Header & Navigation -->
-    <header id="header" class="bg-white/90 backdrop-blur-sm p-4 fixed top-0 left-0 right-0 z-50 transition-all duration-300 shadow-md">
+    <header id="header"
+        class="bg-white/90 backdrop-blur-sm p-4 fixed top-0 left-0 right-0 z-50 transition-all duration-300 shadow-md">
         <nav class="container mx-auto flex justify-between items-center">
-            <a href="#hero" class="font-display text-2xl md:text-3xl tracking-wider text-[var(--emerald)] font-bold">G&E</a>
+            <a href="#hero"
+                class="font-display text-2xl md:text-3xl tracking-wider text-[var(--emerald)] font-bold">G&E</a>
             <ul class="hidden lg:flex space-x-6 text-sm uppercase tracking-widest">
                 <li><a href="#hero" class="hover:text-[var(--emerald)] transition font-medium">Home</a></li>
                 <li><a href="#invitation" class="hover:text-[var(--emerald)] transition font-medium">Invitation</a></li>
                 <li><a href="#details" class="hover:text-[var(--emerald)] transition font-medium">Details</a></li>
                 <li><a href="#location" class="hover:text-[var(--emerald)] transition font-medium">Direction</a></li>
                 <li><a href="#gallery" class="hover:text-[var(--emerald)] transition font-medium">Gallery</a></li>
-                <li><a href="#share-photos" class="hover:text-[var(--emerald)] transition font-medium">Share Photos</a></li>
+                <li><a href="#share-photos" class="hover:text-[var(--emerald)] transition font-medium">Share Photos</a>
+                </li>
                 <li><a href="#support" class="hover:text-[var(--emerald)] transition font-medium">Support</a></li>
-                <li><a href="#" id="program-link-desktop" download="Wedding_Program.pdf" class="hover:text-[var(--emerald)] transition font-medium">Program</a></li>
+                <li><a href="#" id="program-link-desktop" download="Wedding_Program.pdf"
+                        class="hover:text-[var(--emerald)] transition font-medium">Program</a></li>
                 <li><a href="#rsvp" class="hover:text-[var(--emerald)] transition font-medium">RSVP</a></li>
             </ul>
             <button id="mobile-menu-button" class="lg:hidden focus:outline-none text-2xl">
@@ -98,9 +137,10 @@
             </button>
         </nav>
     </header>
-    
+
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden fixed inset-0 bg-black/90 z-40 flex flex-col items-center justify-center space-y-8 text-white uppercase text-lg">
+    <div id="mobile-menu"
+        class="hidden fixed inset-0 bg-black/90 z-40 flex flex-col items-center justify-center space-y-8 text-white uppercase text-lg">
         <button id="close-mobile-menu" class="absolute top-6 right-6 text-4xl">&times;</button>
         <a href="#hero" class="mobile-menu-link">Home</a>
         <a href="#invitation" class="mobile-menu-link">Invitation</a>
@@ -115,12 +155,16 @@
 
     <!-- Hero Section -->
     <!-- ACTION REQUIRED: Create a folder named 'pics' and place an image named 'hero-background.jpg' inside it. -->
-    <section id="hero" class="h-screen bg-cover bg-center flex flex-col justify-center items-center text-white text-center px-4 relative" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('pics/bg.jpg');">
+    <section id="hero"
+        class="h-screen bg-cover bg-center flex flex-col justify-center items-center text-white text-center px-4 relative"
+        style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('pics/bg.jpg');">
         <h1 class="font-display text-5xl md:text-7xl lg:text-8xl mb-4 reveal">Ginna & Emmanuel</h1>
-        <p class="text-xl md:text-2xl mb-8 reveal" style="transition-delay: 200ms;">December 13, 2025 • Abuja, Nigeria</p>
-        
+        <p class="text-xl md:text-2xl mb-8 reveal" style="transition-delay: 200ms;">December 13, 2025 • Abuja, Nigeria
+        </p>
+
         <!-- Countdown Timer -->
-        <div id="countdown" class="grid grid-cols-4 gap-2 sm:gap-4 max-w-2xl mx-auto reveal" style="transition-delay: 400ms;">
+        <div id="countdown" class="grid grid-cols-4 gap-2 sm:gap-4 max-w-2xl mx-auto reveal"
+            style="transition-delay: 400ms;">
             <div class="bg-white/20 backdrop-blur-sm rounded-lg p-3 sm:p-4 text-center">
                 <div id="days" class="text-3xl sm:text-4xl md:text-6xl font-bold font-display">00</div>
                 <div class="text-xs uppercase">Days</div>
@@ -145,7 +189,7 @@
         <!-- Invitation Card Section -->
         <section id="invitation" class="py-20 md:pb-16 bg-gray-50">
             <div class="container mx-auto px-6 max-w-4xl">
-                 <div class="bg-white p-8 md:p-12 rounded-lg shadow-xl relative overflow-hidden text-center reveal">
+                <div class="bg-white p-8 md:p-12 rounded-lg shadow-xl relative overflow-hidden text-center reveal">
                     <div id="particle-container" class="absolute inset-0 pointer-events-none"></div>
                     <h2 class="font-display text-3xl text-[var(--emerald)] mb-8">The Families of</h2>
                     <div class="flex flex-col md:flex-row justify-center items-center gap-8 mb-8">
@@ -159,13 +203,14 @@
                             <p class="text-sm text-[var(--light-text)]">Oke Lamure, Ijebu-Ode LGA, Ogun State</p>
                         </div>
                     </div>
-                    <p class="italic text-[var(--light-text)] max-w-2xl mx-auto my-8">Cordially invite you to the wedding solemnization of their beloved children</p>
+                    <p class="italic text-[var(--light-text)] max-w-2xl mx-auto my-8">Cordially invite you to the
+                        wedding solemnization of their beloved children</p>
                     <div class="couple-names">
                         <h3 class="font-display text-4xl sm:text-5xl mb-2">Ginna Adaugo Nwankpa</h3>
                         <div class="font-display text-4xl text-[var(--gold)] my-2">&</div>
                         <h3 class="font-display text-4xl sm:text-5xl">Emmanuel Dada Omolewu</h3>
                     </div>
-                 </div>
+                </div>
             </div>
         </section>
 
@@ -173,7 +218,8 @@
         <section id="details" class="pt-16 md:pt-20 pb-20 md:pb-28 bg-gray-50">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="font-display text-4xl sm:text-5xl md:text-6xl mb-4 reveal">Wedding Details</h2>
-                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal"></div>
+                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal">
+                </div>
                 <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                     <!-- Event Details -->
                     <div class="bg-white p-8 rounded-lg shadow-lg text-center reveal">
@@ -182,7 +228,8 @@
                         <p class="font-bold text-lg">December 13, 2025</p>
                         <p class="text-lg">12:00 PM</p>
                     </div>
-                     <div id="venueCard" class="bg-white p-8 rounded-lg shadow-lg text-center reveal cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                    <div id="venueCard"
+                        class="bg-white p-8 rounded-lg shadow-lg text-center reveal cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
                         <i class="fas fa-map-marker-alt text-4xl text-[var(--emerald)] mb-4"></i>
                         <h3 class="font-display text-3xl mb-4">Venue</h3>
                         <p class="font-bold text-lg">Multipurpose Hall, Glisten International Academy</p>
@@ -190,37 +237,56 @@
                     </div>
                 </div>
                 <!-- Wedding Colors -->
-                 <div class="mt-20 reveal">
-                     <h2 class="font-display text-3xl sm:text-4xl md:text-5xl mb-4">Our Wedding Colors</h2>
-                     <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12"></div>
-                     <div class="flex justify-center flex-wrap gap-6">
+                <div class="mt-20 reveal">
+                    <h2 class="font-display text-3xl sm:text-4xl md:text-5xl mb-4">Our Wedding Colors</h2>
+                    <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12"></div>
+                    <div class="flex justify-center flex-wrap gap-6">
                         <div class="relative group">
-                           <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#FFDAB9] shadow-md transition-transform duration-300 group-hover:scale-110"></div>
-                           <p class="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-8 left-1/2 -translate-x-1/2 bg-black/70 text-white px-2 py-1 rounded text-sm">Peach</p>
+                            <div
+                                class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#FFDAB9] shadow-md transition-transform duration-300 group-hover:scale-110">
+                            </div>
+                            <p
+                                class="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-8 left-1/2 -translate-x-1/2 bg-black/70 text-white px-2 py-1 rounded text-sm">
+                                Peach</p>
                         </div>
-                         <div class="relative group">
-                           <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white border-2 border-gray-200 shadow-md transition-transform duration-300 group-hover:scale-110"></div>
-                            <p class="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-8 left-1/2 -translate-x-1/2 bg-black/70 text-white px-2 py-1 rounded text-sm">White</p>
+                        <div class="relative group">
+                            <div
+                                class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white border-2 border-gray-200 shadow-md transition-transform duration-300 group-hover:scale-110">
+                            </div>
+                            <p
+                                class="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-8 left-1/2 -translate-x-1/2 bg-black/70 text-white px-2 py-1 rounded text-sm">
+                                White</p>
                         </div>
-                         <div class="relative group">
-                           <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#FFD700] shadow-md transition-transform duration-300 group-hover:scale-110"></div>
-                           <p class="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-8 left-1/2 -translate-x-1/2 bg-black/70 text-white px-2 py-1 rounded text-sm">Gold</p>
+                        <div class="relative group">
+                            <div
+                                class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#FFD700] shadow-md transition-transform duration-300 group-hover:scale-110">
+                            </div>
+                            <p
+                                class="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-8 left-1/2 -translate-x-1/2 bg-black/70 text-white px-2 py-1 rounded text-sm">
+                                Gold</p>
                         </div>
-                         <div class="relative group">
-                           <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#50C878] shadow-md transition-transform duration-300 group-hover:scale-110"></div>
-                           <p class="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-8 left-1/2 -translate-x-1/2 bg-black/70 text-white px-2 py-1 rounded text-sm">Emerald Green</p>
+                        <div class="relative group">
+                            <div
+                                class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#50C878] shadow-md transition-transform duration-300 group-hover:scale-110">
+                            </div>
+                            <p
+                                class="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-8 left-1/2 -translate-x-1/2 bg-black/70 text-white px-2 py-1 rounded text-sm">
+                                Emerald Green</p>
                         </div>
-                     </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Toast Section -->
         <section id="toast" class="py-20 md:py-28 bg-white">
-             <div class="container mx-auto px-6 text-center max-w-4xl">
-                 <h2 class="font-display text-4xl sm:text-5xl md:text-6xl mb-4 reveal">Our Toast</h2>
-                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal"></div>
-                <p class="text-lg md:text-xl leading-relaxed mb-6 reveal">Like a tree planted by rivers of living water, may our love know no season, ever growing, ever flourishing, ever green. Rooted in grace, nurtured by faith, we toast to a lifetime of unshakable love.</p>
+            <div class="container mx-auto px-6 text-center max-w-4xl">
+                <h2 class="font-display text-4xl sm:text-5xl md:text-6xl mb-4 reveal">Our Toast</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal">
+                </div>
+                <p class="text-lg md:text-xl leading-relaxed mb-6 reveal">Like a tree planted by rivers of living water,
+                    may our love know no season, ever growing, ever flourishing, ever green. Rooted in grace, nurtured
+                    by faith, we toast to a lifetime of unshakable love.</p>
                 <p class="font-display text-3xl text-[var(--emerald)] reveal">Cheers to forever.</p>
             </div>
         </section>
@@ -229,25 +295,48 @@
         <section id="gallery" class="py-20 md:py-32">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="font-display text-4xl sm:text-5xl md:text-6xl mb-4 reveal">Our Journey</h2>
-                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal"></div>
+                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal">
+                </div>
                 <!-- ACTION REQUIRED: Place your images in the 'pics' folder and name them gallery-1.jpg, gallery-2.jpg, etc. -->
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                    <div class="reveal"><img src="pics/a.jpg" alt="Photo 1" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
-                    <div class="reveal"><img src="pics/b.jpg" alt="Photo 2" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
-                    <div class="reveal"><img src="pics/c.jpg" alt="Photo 3" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
-                    <div class="reveal"><img src="pics/d.jpg" alt="Photo 4" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
-                    <div class="reveal"><img src="pics/f.jpg" alt="Photo 5" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
-                    <div class="reveal"><img src="pics/e.jpg" alt="Photo 6" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
-                    <div class="reveal"><img src="pics/h.jpg" alt="Photo 7" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
-                    <div class="reveal"><img src="pics/i.jpg" alt="Photo 8" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
-                    <div class="reveal"><img src="pics/l.jpg" alt="Photo 9" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
-                    <div class="reveal"><img src="pics/m.jpg" alt="Photo 10" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
-                    <div class="reveal"><img src="pics/n.jpg" alt="Photo 11" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300"></div>
+                    <div class="reveal"><img src="pics/a.jpg" alt="Photo 1"
+                            class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="reveal"><img src="pics/b.jpg" alt="Photo 2"
+                            class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="reveal"><img src="pics/c.jpg" alt="Photo 3"
+                            class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="reveal"><img src="pics/d.jpg" alt="Photo 4"
+                            class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="reveal"><img src="pics/f.jpg" alt="Photo 5"
+                            class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="reveal"><img src="pics/e.jpg" alt="Photo 6"
+                            class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="reveal"><img src="pics/h.jpg" alt="Photo 7"
+                            class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="reveal"><img src="pics/i.jpg" alt="Photo 8"
+                            class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="reveal"><img src="pics/l.jpg" alt="Photo 9"
+                            class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="reveal"><img src="pics/m.jpg" alt="Photo 10"
+                            class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="reveal"><img src="pics/n.jpg" alt="Photo 11"
+                            class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300">
+                    </div>
 
                 </div>
             </div>
         </section>
-        
+
         <!-- Gallery Lightbox Modal -->
         <div id="lightbox" class="hidden fixed inset-0 bg-black/90 z-[9999] flex justify-center items-center p-4">
             <img id="lightbox-img" src="" alt="Enlarged photo" class="max-w-full max-h-full rounded-lg">
@@ -258,10 +347,15 @@
         <section id="share-photos" class="py-20 md:py-28 bg-white">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="font-display text-4xl sm:text-5xl md:text-6xl mb-4 reveal">Share Our Joy</h2>
-                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal"></div>
-                <p class="max-w-2xl mx-auto mb-8 text-lg reveal">Help us capture every special moment! Please upload your photos and videos from our wedding day. Large images will be automatically resized to ensure a smooth upload.</p>
+                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal">
+                </div>
+                <p class="max-w-2xl mx-auto mb-8 text-lg reveal">Help us capture every special moment! Please upload
+                    your photos and videos from our wedding day. Large images will be automatically resized to ensure a
+                    smooth upload.</p>
                 <div class="reveal max-w-lg mx-auto">
-                    <a href="https://drive.google.com/drive/folders/11eQ_NoE4tIAywloW8Rk-dVatgipsexTR?usp=sharing" target="_blank" class="bg-[var(--emerald)] text-white font-bold py-4 px-8 rounded-full hover:bg-green-600 transition-colors shadow-lg inline-flex items-center gap-3 text-xl">
+                    <a href="https://drive.google.com/drive/folders/11eQ_NoE4tIAywloW8Rk-dVatgipsexTR?usp=sharing"
+                        target="_blank"
+                        class="bg-[var(--emerald)] text-white font-bold py-4 px-8 rounded-full hover:bg-green-600 transition-colors shadow-lg inline-flex items-center gap-3 text-xl">
                         <i class="fas fa-camera"></i>
                         Upload Photos & Videos
                     </a>
@@ -269,21 +363,24 @@
             </div>
         </section>
 
-         <!-- Location Map Section -->
+        <!-- Location Map Section -->
         <section id="location" class="py-20 md:py-28">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="font-display text-4xl sm:text-5xl md:text-6xl mb-4 reveal">Location</h2>
-                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal"></div>
+                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal">
+                </div>
                 <div class="max-w-4xl mx-auto reveal">
-                     <div class="h-[500px] rounded-lg shadow-xl relative overflow-hidden">
+                    <div class="h-[500px] rounded-lg shadow-xl relative overflow-hidden">
                         <div id="map" class="h-full w-full"></div>
                         <div class="absolute top-4 right-4 bg-white p-2 rounded-lg shadow-lg z-[1001] text-center">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://maps.app.goo.gl/2iprf3m1tnUaNgrNA" alt="Venue QR Code" class="w-28 h-28">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://maps.app.goo.gl/2iprf3m1tnUaNgrNA"
+                                alt="Venue QR Code" class="w-28 h-28">
                             <p class="text-xs mt-1">Scan to locate</p>
                         </div>
                     </div>
                     <div class="text-center mt-6">
-                         <a href="https://maps.app.goo.gl/2iprf3m1tnUaNgrNA" target="_blank" class="bg-[var(--emerald)] text-white font-bold py-3 px-6 rounded-full hover:bg-green-600 transition-colors shadow-lg inline-flex items-center gap-2">
+                        <a href="https://maps.app.goo.gl/2iprf3m1tnUaNgrNA" target="_blank"
+                            class="bg-[var(--emerald)] text-white font-bold py-3 px-6 rounded-full hover:bg-green-600 transition-colors shadow-lg inline-flex items-center gap-2">
                             <i class="fas fa-directions"></i> Get Directions
                         </a>
                     </div>
@@ -295,23 +392,28 @@
         <section id="support" class="py-20 md:py-28 bg-white">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="font-display text-4xl sm:text-5xl md:text-6xl mb-4 reveal">Support & Prayers</h2>
-                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal"></div>
-                <p class="max-w-3xl mx-auto mb-12 text-lg reveal">Your presence at our wedding is the greatest gift we could ask for. However, if you wish to bless our new beginning with a gift, you may do so here. We are deeply grateful for your love and support.</p>
-                <div class="max-w-md mx-auto bg-gray-50 p-8 rounded-lg shadow-lg reveal border-t-4 border-[var(--emerald)]">
+                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal">
+                </div>
+                <p class="max-w-3xl mx-auto mb-12 text-lg reveal">Your presence at our wedding is the greatest gift we
+                    could ask for. However, if you wish to bless our new beginning with a gift, you may do so here. We
+                    are deeply grateful for your love and support.</p>
+                <div
+                    class="max-w-md mx-auto bg-gray-50 p-8 rounded-lg shadow-lg reveal border-t-4 border-[var(--emerald)]">
                     <div class="text-left space-y-4">
                         <div>
                             <p class="text-sm text-gray-500">Bank Name</p>
                             <p class="font-bold text-xl">OPAY</p>
                         </div>
-                         <div>
+                        <div>
                             <p class="text-sm text-gray-500">Account Name</p>
                             <p class="font-bold text-xl">Ginna Nwankpa</p>
                         </div>
-                         <div>
+                        <div>
                             <p class="text-sm text-gray-500">Account Number</p>
                             <div class="flex items-center justify-between">
                                 <p id="account-number" class="font-bold text-xl tracking-widest">8066129671</p>
-                                <button id="copy-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-3 rounded-lg text-sm inline-flex items-center gap-2 transition-colors">
+                                <button id="copy-btn"
+                                    class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-3 rounded-lg text-sm inline-flex items-center gap-2 transition-colors">
                                     <i class="far fa-copy"></i>
                                     <span id="copy-btn-text">Copy</span>
                                 </button>
@@ -328,39 +430,53 @@
         <section id="rsvp" class="py-20 md:py-32">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="font-display text-4xl sm:text-5xl md:text-6xl mb-4 reveal">Kindly RSVP</h2>
-                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal"></div>
-                <p class="max-w-3xl mx-auto mb-12 text-lg reveal">Your presence is a gift to us! Please let us know if you can make it by December 13TH, 2025.</p>
+                <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal">
+                </div>
+                <p class="max-w-3xl mx-auto mb-12 text-lg reveal">Your presence is a gift to us! Please let us know if
+                    you can make it by December 13TH, 2025.</p>
 
                 <div class="max-w-4xl mx-auto reveal">
                     <!-- RSVP by Phone -->
                     <h3 class="font-display text-3xl mb-8">RSVP by Phone</h3>
                     <div class="grid md:grid-cols-2 gap-8 mb-16">
-                        <div class="bg-white p-6 rounded-lg shadow-lg flex items-center gap-4 border-l-4 border-[var(--emerald)]">
+                        <div
+                            class="bg-white p-6 rounded-lg shadow-lg flex items-center gap-4 border-l-4 border-[var(--emerald)]">
                             <i class="fas fa-phone-alt text-3xl text-[var(--emerald)]"></i>
                             <div>
                                 <p class="font-bold text-xl">Dada</p>
-                                <a href="tel:+2349070836793" class="text-lg text-[var(--dark-text)] hover:text-[var(--emerald)] transition-colors">+234 812 914 7075</a>
+                                <a href="tel:+2349070836793"
+                                    class="text-lg text-[var(--dark-text)] hover:text-[var(--emerald)] transition-colors">+234
+                                    812 914 7075</a>
                             </div>
                         </div>
-                        <div class="bg-white p-6 rounded-lg shadow-lg flex items-center gap-4 border-l-4 border-[var(--emerald)]">
+                        <div
+                            class="bg-white p-6 rounded-lg shadow-lg flex items-center gap-4 border-l-4 border-[var(--emerald)]">
                             <i class="fas fa-phone-alt text-3xl text-[var(--emerald)]"></i>
                             <div>
                                 <p class="font-bold text-xl">Ginna</p>
-                                <a href="tel:+2349070836793" class="text-lg text-[var(--dark-text)] hover:text-[var(--emerald)] transition-colors">+234 806 612 9671</a>
+                                <a href="tel:+2349070836793"
+                                    class="text-lg text-[var(--dark-text)] hover:text-[var(--emerald)] transition-colors">+234
+                                    806 612 9671</a>
                             </div>
                         </div>
-                        <div class="bg-white p-6 rounded-lg shadow-lg flex items-center gap-4 border-l-4 border-[var(--emerald)]">
+                        <div
+                            class="bg-white p-6 rounded-lg shadow-lg flex items-center gap-4 border-l-4 border-[var(--emerald)]">
                             <i class="fas fa-phone-alt text-3xl text-[var(--emerald)]"></i>
                             <div>
                                 <p class="font-bold text-xl">Esther</p>
-                                <a href="tel:+2349070836793" class="text-lg text-[var(--dark-text)] hover:text-[var(--emerald)] transition-colors">+234 907 083 6793</a>
+                                <a href="tel:+2349070836793"
+                                    class="text-lg text-[var(--dark-text)] hover:text-[var(--emerald)] transition-colors">+234
+                                    907 083 6793</a>
                             </div>
                         </div>
-                        <div class="bg-white p-6 rounded-lg shadow-lg flex items-center gap-4 border-l-4 border-[var(--emerald)]">
+                        <div
+                            class="bg-white p-6 rounded-lg shadow-lg flex items-center gap-4 border-l-4 border-[var(--emerald)]">
                             <i class="fas fa-phone-alt text-3xl text-[var(--emerald)]"></i>
                             <div>
                                 <p class="font-bold text-xl">Maureen</p>
-                                <a href="tel:+2348161504965" class="text-lg text-[var(--dark-text)] hover:text-[var(--emerald)] transition-colors">+234 816 150 4965</a>
+                                <a href="tel:+2348161504965"
+                                    class="text-lg text-[var(--dark-text)] hover:text-[var(--emerald)] transition-colors">+234
+                                    816 150 4965</a>
                             </div>
                         </div>
                     </div>
@@ -368,14 +484,16 @@
                     <!-- RSVP Online Form -->
                     <h3 class="font-display text-3xl mb-8">RSVP Online</h3>
                     <div class="aspect-w-1 aspect-h-1 md:aspect-w-3 md:aspect-h-2 rounded-lg overflow-hidden shadow-xl">
-                        <iframe class="w-full h-full" src="https://docs.google.com/forms/d/e/1FAIpQLScW-BI6vzLu7Rxb8KJJPCAV1ruKUJWmE_LSJ_XlECyYwkaFhw/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                        <iframe class="w-full h-full"
+                            src="https://docs.google.com/forms/d/e/1FAIpQLScW-BI6vzLu7Rxb8KJJPCAV1ruKUJWmE_LSJ_XlECyYwkaFhw/viewform?embedded=true"
+                            frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
                     </div>
                 </div>
             </div>
         </section>
 
     </main>
-    
+
     <!-- Footer -->
     <footer class="bg-[var(--dark-text)] text-white py-12">
         <div class="container mx-auto px-6 text-center">
@@ -387,34 +505,46 @@
     <!-- Floating CTA & Scroll to Top Buttons -->
     <div class="fixed bottom-5 right-5 z-40 flex flex-col items-center gap-4">
         <!-- Scroll to Top -->
-        <button id="scroll-top-btn" class="w-12 h-12 bg-white text-[var(--emerald)] rounded-full shadow-lg flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:scale-110">
+        <button id="scroll-top-btn"
+            class="w-12 h-12 bg-white text-[var(--emerald)] rounded-full shadow-lg flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:scale-110">
             <i class="fas fa-arrow-up"></i>
         </button>
 
         <!-- CTA Menu Buttons (initially hidden) -->
         <div id="cta-buttons" class="flex flex-col items-center gap-4 hidden transition-all duration-300">
-            <a href="https://wa.me/2348129147075" target="_blank" class="cta-btn bg-[#25D366] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform relative group">
+            <a href="https://wa.me/2348129147075" target="_blank"
+                class="cta-btn bg-[#25D366] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform relative group">
                 <i class="fab fa-whatsapp text-2xl"></i>
-                <span class="tooltip absolute right-14 bg-black/70 text-white text-xs px-2 py-1 rounded-md opacity-0 transform -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0 whitespace-nowrap">Chat with us</span>
+                <span
+                    class="tooltip absolute right-14 bg-black/70 text-white text-xs px-2 py-1 rounded-md opacity-0 transform -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0 whitespace-nowrap">Chat
+                    with us</span>
             </a>
-            <a href="#" id="program-link-cta" download="Wedding_Program.pdf" class="cta-btn bg-[var(--gold)] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform relative group">
+            <a href="#" id="program-link-cta" download="Wedding_Program.pdf"
+                class="cta-btn bg-[var(--gold)] text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform relative group">
                 <i class="fas fa-file-pdf text-2xl"></i>
-                <span class="tooltip absolute right-14 bg-black/70 text-white text-xs px-2 py-1 rounded-md opacity-0 transform -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0 whitespace-nowrap">Download Program</span>
+                <span
+                    class="tooltip absolute right-14 bg-black/70 text-white text-xs px-2 py-1 rounded-md opacity-0 transform -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0 whitespace-nowrap">Download
+                    Program</span>
             </a>
-            <button id="cta-upload-button" class="cta-btn bg-[var(--peach)] text-[var(--dark-text)] w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform relative group">
+            <button id="cta-upload-button"
+                class="cta-btn bg-[var(--peach)] text-[var(--dark-text)] w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform relative group">
                 <i class="fas fa-camera text-2xl"></i>
-                <span class="tooltip absolute right-14 bg-black/70 text-white text-xs px-2 py-1 rounded-md opacity-0 transform -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0 whitespace-nowrap">Share Photos</span>
+                <span
+                    class="tooltip absolute right-14 bg-black/70 text-white text-xs px-2 py-1 rounded-md opacity-0 transform -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0 whitespace-nowrap">Share
+                    Photos</span>
             </button>
         </div>
-        
+
         <!-- Main CTA Toggle Button -->
-         <button id="cta-main-btn" class="w-16 h-16 rounded-full bg-[var(--emerald)] text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform relative">
+        <button id="cta-main-btn"
+            class="w-16 h-16 rounded-full bg-[var(--emerald)] text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform relative">
             <i class="fas fa-plus text-2xl transition-transform duration-300"></i>
         </button>
     </div>
 
     <!-- Leaflet JS for Map -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
@@ -435,14 +565,14 @@
                 hamburgerIcon.classList.toggle('fa-times');
             });
             closeMobileMenuButton.addEventListener('click', () => {
-                 mobileMenu.classList.add('hidden');
-                 hamburgerIcon.classList.add('fa-bars');
-                 hamburgerIcon.classList.remove('fa-times');
+                mobileMenu.classList.add('hidden');
+                hamburgerIcon.classList.add('fa-bars');
+                hamburgerIcon.classList.remove('fa-times');
             });
             mobileMenuLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
                     // Do not hide menu for download link, let browser handle it
-                    if(!link.hasAttribute('download')) {
+                    if (!link.hasAttribute('download')) {
                         mobileMenu.classList.add('hidden');
                         hamburgerIcon.classList.add('fa-bars');
                         hamburgerIcon.classList.remove('fa-times');
@@ -492,10 +622,10 @@
                     particleContainer.appendChild(particle);
                 }
             }
-            
+
             // --- VENUE CARD CLICK ---
             const venueCard = document.getElementById('venueCard');
-            if(venueCard) {
+            if (venueCard) {
                 venueCard.addEventListener('click', () => {
                     document.getElementById('location').scrollIntoView({ behavior: 'smooth' });
                 });
@@ -503,7 +633,7 @@
 
             // --- LEAFLET MAP ---
             const mapElement = document.getElementById('map');
-            if(mapElement) {
+            if (mapElement) {
                 const map = L.map('map').setView(mapCoordinates, 15);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -515,7 +645,7 @@
                     iconSize: [30, 42],
                     iconAnchor: [15, 42]
                 });
-                L.marker(mapCoordinates, {icon: customIcon, zIndexOffset: 1000}).addTo(map)
+                L.marker(mapCoordinates, { icon: customIcon, zIndexOffset: 1000 }).addTo(map)
                     .bindPopup('<b>Glisten International Academy</b><br>Our Wedding Venue').openPopup();
             }
 
@@ -538,8 +668,8 @@
 
             // --- ACCOUNT NUMBER COPY BUTTON ---
             const copyBtn = document.getElementById('copy-btn');
-            if(copyBtn) {
-                copyBtn.addEventListener('click', function() {
+            if (copyBtn) {
+                copyBtn.addEventListener('click', function () {
                     const accountNumber = document.getElementById('account-number').innerText;
                     const copyBtnText = document.getElementById('copy-btn-text');
                     navigator.clipboard.writeText(accountNumber).then(() => {
@@ -603,53 +733,56 @@
             revealElements.forEach(el => observer.observe(el));
 
             // ...existing code...
-// --- COUNTDOWN POPUP ---
-const countdownPopup = document.getElementById('countdown-popup');
-const popupMessage = document.getElementById('popup-message');
-const popupCloseButton = document.getElementById('popup-close');
+            // --- COUNTDOWN POPUP ---
+            const countdownPopup = document.getElementById('countdown-popup');
+            const popupMessage = document.getElementById('popup-message');
+            const popupCloseButton = document.getElementById('popup-close');
 
-function showCountdownPopup() {
-    const now = new Date().getTime();
-    const distance = weddingDate - now;
-    if (distance <= 0) return; // Don't show if the wedding date has passed
+            function showCountdownPopup() {
+                const now = new Date().getTime();
+                const distance = weddingDate - now;
+                if (distance <= 0) return; // Don't show if the wedding date has passed
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    popupMessage.innerText = `Only ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds to our wedding!`;
-    countdownPopup.classList.remove('opacity-0', 'pointer-events-none');
-    countdownPopup.classList.add('opacity-100', 'pointer-events-auto');
+                popupMessage.innerText = `Only ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds to our wedding!`;
+                countdownPopup.classList.remove('opacity-0', 'pointer-events-none');
+                countdownPopup.classList.add('opacity-100', 'pointer-events-auto');
 
-    setTimeout(() => {
-        countdownPopup.classList.remove('opacity-100', 'pointer-events-auto');
-        countdownPopup.classList.add('opacity-0', 'pointer-events-none');
-    }, 10000); // Hide after 10 seconds
-}
+                setTimeout(() => {
+                    countdownPopup.classList.remove('opacity-100', 'pointer-events-auto');
+                    countdownPopup.classList.add('opacity-0', 'pointer-events-none');
+                }, 10000); // Hide after 10 seconds
+            }
 
-// Show popup after 2 seconds (so page loads first)
-setTimeout(showCountdownPopup, 2000);
+            // Show popup after 2 seconds (so page loads first)
+            setTimeout(showCountdownPopup, 2000);
 
-// Show popup every 5 hours (18000000 ms)
-setInterval(showCountdownPopup, 18000000);
+            // Show popup every 5 hours (18000000 ms)
+            setInterval(showCountdownPopup, 18000000);
 
-// Close button
-popupCloseButton.addEventListener('click', () => {
-    countdownPopup.classList.remove('opacity-100', 'pointer-events-auto');
-    countdownPopup.classList.add('opacity-0', 'pointer-events-none');
-});
+            // Close button
+            popupCloseButton.addEventListener('click', () => {
+                countdownPopup.classList.remove('opacity-100', 'pointer-events-auto');
+                countdownPopup.classList.add('opacity-0', 'pointer-events-none');
+            });
 
         });
     </script>
 
     <!-- Countdown Popup -->
-    <div id="countdown-popup" class="fixed bottom-8 right-8 z-[99999] bg-white border border-[var(--emerald)] shadow-xl rounded-lg px-6 py-4 flex items-center gap-4 transition-all duration-300 opacity-0 pointer-events-none">
+    <div id="countdown-popup"
+        class="fixed bottom-8 right-8 z-[99999] bg-white border border-[var(--emerald)] shadow-xl rounded-lg px-6 py-4 flex items-center gap-4 transition-all duration-300 opacity-0 pointer-events-none">
         <i class="fas fa-clock text-2xl text-[var(--emerald)]"></i>
         <div>
             <p id="popup-message" class="font-bold text-lg text-[var(--emerald)]"></p>
         </div>
-        <button id="popup-close" class="ml-4 text-gray-400 hover:text-[var(--emerald)] text-2xl leading-none">&times;</button>
+        <button id="popup-close"
+            class="ml-4 text-gray-400 hover:text-[var(--emerald)] text-2xl leading-none">&times;</button>
     </div>
 </body>
+
 </html>
