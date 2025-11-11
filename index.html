@@ -670,28 +670,21 @@
                                 const photoElement = document.createElement('div');
                                 photoElement.className = 'reveal uploaded-photo';
 
-                                const buffer = new Uint8Array(media.data.data);
-                                const blob = new Blob([buffer], { type: media.mimetype });
-                                const reader = new FileReader();
-
-                                reader.onload = (e) => {
-                                    photoElement.innerHTML = `
-                                        <img src="${e.target.result}" alt="Uploaded by ${media.uploader}" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300 w-full h-48 object-cover">
-                                        <div class="mt-2 text-xs text-gray-600">
-                                            <p class="font-semibold">${media.uploader}</p>
-                                            ${media.message ? `<p class="truncate">"${media.message}"</p>` : ''}
-                                        </div>
-                                    `;
-                                    const img = photoElement.querySelector('img');
-                                    img.addEventListener('click', () => {
-                                        const lightbox = document.getElementById('lightbox');
-                                        const lightboxImg = document.getElementById('lightbox-img');
-                                        lightboxImg.src = img.src;
-                                        lightbox.classList.remove('hidden');
-                                        document.body.style.overflow = 'hidden';
-                                    });
-                                };
-                                reader.readAsDataURL(blob);
+                                photoElement.innerHTML = `
+                                    <img src="${media.cloudinaryUrl}" alt="Uploaded by ${media.uploader}" class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300 w-full h-48 object-cover">
+                                    <div class="mt-2 text-xs text-gray-600">
+                                        <p class="font-semibold">${media.uploader}</p>
+                                        ${media.message ? `<p class="truncate">"${media.message}"</p>` : ''}
+                                    </div>
+                                `;
+                                const img = photoElement.querySelector('img');
+                                img.addEventListener('click', () => {
+                                    const lightbox = document.getElementById('lightbox');
+                                    const lightboxImg = document.getElementById('lightbox-img');
+                                    lightboxImg.src = img.src;
+                                    lightbox.classList.remove('hidden');
+                                    document.body.style.overflow = 'hidden';
+                                });
                                 uploadedPhotosContainer.appendChild(photoElement);
                             } else {
                                 const stackContainer = document.createElement('div');
@@ -703,27 +696,19 @@
                                 const photoCountBadge = document.createElement('div');
                                 photoCountBadge.className = 'absolute top-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded-full';
                                 photoCountBadge.textContent = `${mediaItems.length} photos`;
-                                
+
                                 imageContainer.appendChild(photoCountBadge);
 
                                 mediaItems.forEach((media, index) => {
                                     const img = document.createElement('img');
+                                    img.src = media.cloudinaryUrl;
                                     img.alt = `Uploaded by ${uploader}`;
                                     img.className = `rounded-lg shadow-md w-full h-48 object-cover ${index === 0 ? 'block' : 'hidden'}`;
-
-                                    const buffer = new Uint8Array(media.data.data);
-                                    const blob = new Blob([buffer], { type: media.mimetype });
-                                    const reader = new FileReader();
-
-                                    reader.onload = (e) => {
-                                        img.src = e.target.result;
-                                    };
-                                    reader.readAsDataURL(blob);
                                     imageContainer.appendChild(img);
                                 });
 
                                 stackContainer.appendChild(imageContainer);
-                                
+
                                 let currentIndex = 0;
                                 const message = mediaItems[currentIndex].message || '';
 
