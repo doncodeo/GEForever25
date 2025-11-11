@@ -108,6 +108,41 @@
             opacity: 1;
             transform: translateX(0);
         }
+
+        /* Loading animation */
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--emerald);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Uploaded photos styling */
+        .uploaded-photo {
+            position: relative;
+        }
+
+        .uploaded-photo::before {
+            content: 'New!';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--emerald);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            z-index: 10;
+        }
     </style>
 </head>
 
@@ -154,7 +189,6 @@
     </div>
 
     <!-- Hero Section -->
-    <!-- ACTION REQUIRED: Create a folder named 'pics' and place an image named 'hero-background.jpg' inside it. -->
     <section id="hero"
         class="h-screen bg-cover bg-center flex flex-col justify-center items-center text-white text-center px-4 relative"
         style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('pics/bg.jpg');">
@@ -297,7 +331,25 @@
                 <h2 class="font-display text-4xl sm:text-5xl md:text-6xl mb-4 reveal">Our Journey</h2>
                 <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal">
                 </div>
-                <!-- ACTION REQUIRED: Place your images in the 'pics' folder and name them gallery-1.jpg, gallery-2.jpg, etc. -->
+                
+                <!-- Uploaded Photos Section -->
+                <div id="uploaded-photos-container" class="mb-16">
+                    <h3 class="font-display text-2xl sm:text-3xl mb-8 text-[var(--emerald)]">Photos from Our Guests</h3>
+                    <div id="uploaded-photos" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-8">
+                        <!-- Uploaded photos will be loaded here dynamically -->
+                        <div id="uploaded-photos-loading" class="col-span-full">
+                            <div class="loading-spinner"></div>
+                            <p class="mt-4 text-gray-600">Loading guest photos...</p>
+                        </div>
+                    </div>
+                    <div id="no-uploaded-photos" class="hidden bg-gray-50 p-8 rounded-lg">
+                        <i class="fas fa-camera text-4xl text-gray-400 mb-4"></i>
+                        <p class="text-gray-600">No photos uploaded by guests yet. Be the first to share!</p>
+                    </div>
+                </div>
+
+                <!-- Original Gallery -->
+                <h3 class="font-display text-2xl sm:text-3xl mb-8">Our Precious Moments</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                     <div class="reveal"><img src="pics/a.jpg" alt="Photo 1"
                             class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300">
@@ -332,7 +384,6 @@
                     <div class="reveal"><img src="pics/n.jpg" alt="Photo 11"
                             class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300">
                     </div>
-
                 </div>
             </div>
         </section>
@@ -350,15 +401,40 @@
                 <div class="w-20 h-1 bg-gradient-to-r from-[var(--peach)] to-[var(--emerald)] mx-auto mb-12 reveal">
                 </div>
                 <p class="max-w-2xl mx-auto mb-8 text-lg reveal">Help us capture every special moment! Please upload
-                    your photos and videos from our wedding day. Large images will be automatically resized to ensure a
-                    smooth upload.</p>
+                    your photos and videos from our wedding day. Your photos will appear in the gallery above for everyone to see!</p>
+                
+                <!-- Upload Form -->
                 <div class="reveal max-w-lg mx-auto">
-                    <a href="https://drive.google.com/drive/folders/11eQ_NoE4tIAywloW8Rk-dVatgipsexTR?usp=sharing"
-                        target="_blank"
-                        class="bg-[var(--emerald)] text-white font-bold py-4 px-8 rounded-full hover:bg-green-600 transition-colors shadow-lg inline-flex items-center gap-3 text-xl">
-                        <i class="fas fa-camera"></i>
-                        Upload Photos & Videos
-                    </a>
+                    <form id="upload-form" enctype="multipart/form-data" class="space-y-6 bg-gray-50 p-8 rounded-lg shadow-lg">
+                        <div>
+                            <label for="uploader" class="block text-sm font-medium text-gray-700 mb-2 text-left">Your Name (Optional)</label>
+                            <input type="text" id="uploader" name="uploader" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--emerald)] focus:border-transparent transition-all"
+                                   placeholder="Enter your name">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2 text-left">Message (Optional)</label>
+                            <textarea id="message" name="message" rows="3"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--emerald)] focus:border-transparent transition-all resize-none"
+                                    placeholder="Add a message with your photos (e.g., 'Had a wonderful time!')"></textarea>
+                        </div>
+                        <div>
+                            <label for="media" class="block text-sm font-medium text-gray-700 mb-2 text-left">Select Photos/Videos</label>
+                            <input type="file" id="media" name="media" multiple
+                                   accept="image/*,video/*"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[var(--emerald)] file:text-white hover:file:bg-green-600 transition-all cursor-pointer">
+                            <p class="text-xs text-gray-500 mt-2 text-left">Maximum 10 files, 10MB each. Supported formats: JPG, PNG, GIF, MP4, MOV</p>
+                        </div>
+                        <button type="submit" id="upload-submit"
+                                class="w-full bg-[var(--emerald)] text-white font-bold py-4 px-8 rounded-full hover:bg-green-600 transition-all shadow-lg text-xl disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fas fa-cloud-upload-alt mr-2"></i>
+                            <span id="upload-text">Upload Photos & Videos</span>
+                            <div id="upload-spinner" class="hidden inline-block ml-2">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </div>
+                        </button>
+                    </form>
+                    <div id="upload-status" class="mt-4"></div>
                 </div>
             </div>
         </section>
@@ -444,7 +520,7 @@
                             <i class="fas fa-phone-alt text-3xl text-[var(--emerald)]"></i>
                             <div>
                                 <p class="font-bold text-xl">Dada</p>
-                                <a href="tel:+2349070836793"
+                                <a href="tel:+2348129147075"
                                     class="text-lg text-[var(--dark-text)] hover:text-[var(--emerald)] transition-colors">+234
                                     812 914 7075</a>
                             </div>
@@ -454,7 +530,7 @@
                             <i class="fas fa-phone-alt text-3xl text-[var(--emerald)]"></i>
                             <div>
                                 <p class="font-bold text-xl">Ginna</p>
-                                <a href="tel:+2349070836793"
+                                <a href="tel:+2348066129671"
                                     class="text-lg text-[var(--dark-text)] hover:text-[var(--emerald)] transition-colors">+234
                                     806 612 9671</a>
                             </div>
@@ -484,7 +560,7 @@
                     <!-- RSVP Online Form -->
                     <h3 class="font-display text-3xl mb-8">RSVP Online</h3>
                     <div class="aspect-w-1 aspect-h-1 md:aspect-w-3 md:aspect-h-2 rounded-lg overflow-hidden shadow-xl">
-                        <iframe class="w-full h-full"
+                        <iframe class="w-full h-full" 
                             src="https://docs.google.com/forms/d/e/1FAIpQLScW-BI6vzLu7Rxb8KJJPCAV1ruKUJWmE_LSJ_XlECyYwkaFhw/viewform?embedded=true"
                             frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
                     </div>
@@ -545,14 +621,170 @@
     <!-- Leaflet JS for Map -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        // Server configuration
+        const SERVER_URL = 'http://localhost:5000'; 
+
+        document.addEventListener('DOMContentLoaded', async () => {
 
             // --- CONFIGURATION ---
             const weddingDate = new Date('December 13, 2025 10:00:00').getTime();
             const mapCoordinates = [9.1023, 7.4227]; // Approx. coords for Jahi, Abuja
 
-            // --- MOBILE MENU ---
+            // --- LOAD UPLOADED PHOTOS ---
+            async function loadUploadedPhotos() {
+                try {
+                    const response = await fetch(`${SERVER_URL}/api/media`);
+                    const result = await response.json();
+                    
+                    const uploadedPhotosContainer = document.getElementById('uploaded-photos');
+                    const loadingElement = document.getElementById('uploaded-photos-loading');
+                    const noPhotosElement = document.getElementById('no-uploaded-photos');
+                    
+                    if (loadingElement) {
+                        loadingElement.remove();
+                    }
+                    
+                    if (result.success && result.data.media.length > 0) {
+                        // Show uploaded photos
+                        noPhotosElement.classList.add('hidden');
+                        
+                        result.data.media.forEach(media => {
+                            if (media.mimetype.startsWith('image/')) {
+                                const photoElement = document.createElement('div');
+                                photoElement.className = 'reveal uploaded-photo';
+                                photoElement.innerHTML = `
+                                    <img src="${SERVER_URL}/api/media/${media._id}" 
+                                         alt="Uploaded by ${media.uploader}"
+                                         class="rounded-lg shadow-md cursor-pointer gallery-item hover:scale-105 transition-transform duration-300 w-full h-48 object-cover">
+                                    <div class="mt-2 text-xs text-gray-600">
+                                        <p class="font-semibold">${media.uploader}</p>
+                                        ${media.message ? `<p class="truncate">"${media.message}"</p>` : ''}
+                                    </div>
+                                `;
+                                
+                                // Add click event for lightbox
+                                const img = photoElement.querySelector('img');
+                                img.addEventListener('click', () => {
+                                    const lightbox = document.getElementById('lightbox');
+                                    const lightboxImg = document.getElementById('lightbox-img');
+                                    lightboxImg.src = img.src;
+                                    lightbox.classList.remove('hidden');
+                                    document.body.style.overflow = 'hidden';
+                                });
+                                
+                                uploadedPhotosContainer.appendChild(photoElement);
+                            }
+                        });
+                        
+                        // Trigger reveal animations for new photos
+                        const newReveals = uploadedPhotosContainer.querySelectorAll('.reveal');
+                        newReveals.forEach(el => {
+                            setTimeout(() => el.classList.add('visible'), 100);
+                        });
+                    } else {
+                        // No photos uploaded yet
+                        noPhotosElement.classList.remove('hidden');
+                    }
+                } catch (error) {
+                    console.error('Error loading uploaded photos:', error);
+                    const loadingElement = document.getElementById('uploaded-photos-loading');
+                    if (loadingElement) {
+                        loadingElement.innerHTML = `
+                            <div class="text-red-600">
+                                <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
+                                <p>Failed to load guest photos</p>
+                            </div>
+                        `;
+                    }
+                }
+            }
+
+            // Load photos when page loads
+            await loadUploadedPhotos();
+
+            // --- UPLOAD FORM HANDLING ---
+            const uploadForm = document.getElementById('upload-form');
+            const uploadStatus = document.getElementById('upload-status');
+            const uploadSubmit = document.getElementById('upload-submit');
+            const uploadText = document.getElementById('upload-text');
+            const uploadSpinner = document.getElementById('upload-spinner');
+
+            if (uploadForm) {
+                uploadForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(uploadForm);
+                    const files = document.getElementById('media').files;
+                    
+                    if (files.length === 0) {
+                        showUploadStatus('Please select at least one file to upload.', 'error');
+                        return;
+                    }
+                    
+                    // Show loading state
+                    uploadSubmit.disabled = true;
+                    uploadText.textContent = 'Uploading...';
+                    uploadSpinner.classList.remove('hidden');
+                    uploadStatus.innerHTML = '';
+                    
+                    try {
+                        const response = await fetch(`${SERVER_URL}/api/upload`, {
+                            method: 'POST',
+                            body: formData
+                        });
+                        
+                        const result = await response.json();
+                        
+                        if (result.success) {
+                            showUploadStatus(
+                                `Successfully uploaded ${result.data.files.length} file(s)! They will appear in the gallery shortly.`,
+                                'success'
+                            );
+                            uploadForm.reset();
+                            
+                            // Reload the uploaded photos section
+                            setTimeout(loadUploadedPhotos, 1000);
+                        } else {
+                            throw new Error(result.message);
+                        }
+                    } catch (error) {
+                        showUploadStatus(`Upload failed: ${error.message}`, 'error');
+                    } finally {
+                        // Reset button state
+                        uploadSubmit.disabled = false;
+                        uploadText.textContent = 'Upload Photos & Videos';
+                        uploadSpinner.classList.add('hidden');
+                    }
+                });
+            }
+
+            function showUploadStatus(message, type) {
+                const bgColor = type === 'success' ? 'bg-green-100 border-green-400 text-green-700' : 
+                              type === 'error' ? 'bg-red-100 border-red-400 text-red-700' : 
+                              'bg-blue-100 border-blue-400 text-blue-700';
+                
+                const icon = type === 'success' ? 'fa-check-circle' : 
+                           type === 'error' ? 'fa-exclamation-triangle' : 'fa-info-circle';
+                
+                uploadStatus.innerHTML = `
+                    <div class="${bgColor} border px-4 py-3 rounded flex items-center">
+                        <i class="fas ${icon} mr-2"></i>
+                        ${message}
+                    </div>
+                `;
+                
+                // Auto-hide success messages after 5 seconds
+                if (type === 'success') {
+                    setTimeout(() => {
+                        uploadStatus.innerHTML = '';
+                    }, 5000);
+                }
+            }
+
+            // --- EXISTING FUNCTIONALITY (keep all your existing JavaScript code) ---
+            // MOBILE MENU
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const closeMobileMenuButton = document.getElementById('close-mobile-menu');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -571,7 +803,6 @@
             });
             mobileMenuLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
-                    // Do not hide menu for download link, let browser handle it
                     if (!link.hasAttribute('download')) {
                         mobileMenu.classList.add('hidden');
                         hamburgerIcon.classList.add('fa-bars');
@@ -580,7 +811,7 @@
                 });
             });
 
-            // --- COUNTDOWN TIMER ---
+            // COUNTDOWN TIMER
             const daysEl = document.getElementById('days'), hoursEl = document.getElementById('hours'), minutesEl = document.getElementById('minutes'), secondsEl = document.getElementById('seconds');
             const timer = setInterval(() => {
                 const now = new Date().getTime();
@@ -596,7 +827,7 @@
                 secondsEl.innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
             }, 1000);
 
-            // --- INVITATION PARTICLE ANIMATION ---
+            // INVITATION PARTICLE ANIMATION
             const particleContainer = document.getElementById('particle-container');
             if (particleContainer) {
                 const particles = 50;
@@ -623,7 +854,7 @@
                 }
             }
 
-            // --- VENUE CARD CLICK ---
+            // VENUE CARD CLICK
             const venueCard = document.getElementById('venueCard');
             if (venueCard) {
                 venueCard.addEventListener('click', () => {
@@ -631,7 +862,7 @@
                 });
             }
 
-            // --- LEAFLET MAP ---
+            // LEAFLET MAP
             const mapElement = document.getElementById('map');
             if (mapElement) {
                 const map = L.map('map').setView(mapCoordinates, 15);
@@ -649,7 +880,7 @@
                     .bindPopup('<b>Glisten International Academy</b><br>Our Wedding Venue').openPopup();
             }
 
-            // --- GALLERY LIGHTBOX ---
+            // GALLERY LIGHTBOX
             const galleryItems = document.querySelectorAll('.gallery-item');
             const lightbox = document.getElementById('lightbox'), lightboxImg = document.getElementById('lightbox-img'), lightboxClose = document.getElementById('lightbox-close');
             galleryItems.forEach(item => {
@@ -666,7 +897,7 @@
             lightboxClose.addEventListener('click', closeLightbox);
             lightbox.addEventListener('click', (e) => e.target === lightbox && closeLightbox());
 
-            // --- ACCOUNT NUMBER COPY BUTTON ---
+            // ACCOUNT NUMBER COPY BUTTON
             const copyBtn = document.getElementById('copy-btn');
             if (copyBtn) {
                 copyBtn.addEventListener('click', function () {
@@ -685,7 +916,7 @@
                 });
             }
 
-            // --- FLOATING CTA & SCROLL-TO-TOP BUTTONS ---
+            // FLOATING CTA & SCROLL-TO-TOP BUTTONS
             const ctaMainBtn = document.getElementById('cta-main-btn');
             const ctaIcon = ctaMainBtn.querySelector('i');
             const ctaButtons = document.getElementById('cta-buttons');
@@ -711,16 +942,15 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
 
-
-            // --- CTA UPLOAD BUTTON ---
+            // CTA UPLOAD BUTTON
             const ctaUploadButton = document.getElementById('cta-upload-button');
             if (ctaUploadButton) {
                 ctaUploadButton.addEventListener('click', () => {
-                    window.open('https://drive.google.com/drive/folders/11eQ_NoE4tIAywloW8Rk-dVatgipsexTR?usp=sharing', '_blank');
+                    document.getElementById('share-photos').scrollIntoView({ behavior: 'smooth' });
                 });
             }
 
-            // --- SCROLL-REVEAL ANIMATIONS ---
+            // SCROLL-REVEAL ANIMATIONS
             const revealElements = document.querySelectorAll('.reveal');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -732,8 +962,7 @@
             }, { threshold: 0.1 });
             revealElements.forEach(el => observer.observe(el));
 
-            // ...existing code...
-            // --- COUNTDOWN POPUP ---
+            // COUNTDOWN POPUP
             const countdownPopup = document.getElementById('countdown-popup');
             const popupMessage = document.getElementById('popup-message');
             const popupCloseButton = document.getElementById('popup-close');
@@ -741,7 +970,7 @@
             function showCountdownPopup() {
                 const now = new Date().getTime();
                 const distance = weddingDate - now;
-                if (distance <= 0) return; // Don't show if the wedding date has passed
+                if (distance <= 0) return;
 
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -755,16 +984,12 @@
                 setTimeout(() => {
                     countdownPopup.classList.remove('opacity-100', 'pointer-events-auto');
                     countdownPopup.classList.add('opacity-0', 'pointer-events-none');
-                }, 10000); // Hide after 10 seconds
+                }, 10000);
             }
 
-            // Show popup after 2 seconds (so page loads first)
             setTimeout(showCountdownPopup, 2000);
-
-            // Show popup every 5 hours (18000000 ms)
             setInterval(showCountdownPopup, 18000000);
 
-            // Close button
             popupCloseButton.addEventListener('click', () => {
                 countdownPopup.classList.remove('opacity-100', 'pointer-events-auto');
                 countdownPopup.classList.add('opacity-0', 'pointer-events-none');
