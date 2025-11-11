@@ -392,6 +392,9 @@
         <div id="lightbox" class="hidden fixed inset-0 bg-black/90 z-[9999] flex justify-center items-center p-4">
             <img id="lightbox-img" src="" alt="Enlarged photo" class="max-w-full max-h-full rounded-lg">
             <button id="lightbox-close" class="absolute top-6 right-6 text-white text-4xl">&times;</button>
+            <button id="lightbox-prev" class="absolute left-6 top-1/2 -translate-y-1/2 text-white text-4xl">&lt;</button>
+            <button id="lightbox-next" class="absolute right-6 top-1/2 -translate-y-1/2 text-white text-4xl">&gt;</button>
+            <div id="lightbox-counter" class="absolute bottom-6 text-white text-lg"></div>
         </div>
 
         <!-- Share Photos Section -->
@@ -423,6 +426,7 @@
                             <input type="file" id="media" name="media" multiple
                                    accept="image/*,video/*"
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[var(--emerald)] file:text-white hover:file:bg-green-600 transition-all cursor-pointer">
+                            <div id="image-preview-container" class="mt-4 grid grid-cols-3 gap-4"></div>
                             <p class="text-xs text-gray-500 mt-2 text-left">Maximum 10 files, 10MB each. Supported formats: JPG, PNG, GIF, MP4, MOV</p>
                         </div>
                         <button type="submit" id="upload-submit"
@@ -721,17 +725,8 @@
                                 stackContainer.appendChild(infoDiv);
 
                                 stackContainer.addEventListener('click', () => {
-                                    const images = imageContainer.querySelectorAll('img');
-                                    images[currentIndex].classList.remove('block');
-                                    images[currentIndex].classList.add('hidden');
-
-                                    currentIndex = (currentIndex + 1) % mediaItems.length;
-
-                                    images[currentIndex].classList.remove('hidden');
-                                    images[currentIndex].classList.add('block');
-
-                                    const messageTag = infoDiv.querySelector('.truncate');
-                                    messageTag.textContent = `"${mediaItems[currentIndex].message || ''}"`;
+                                    const imageUrls = mediaItems.map(item => item.cloudinaryUrl);
+                                    showLightbox(imageUrls, 0);
                                 });
 
                                 uploadedPhotosContainer.appendChild(stackContainer);
@@ -768,6 +763,29 @@
             const uploadSubmit = document.getElementById('upload-submit');
             const uploadText = document.getElementById('upload-text');
             const uploadSpinner = document.getElementById('upload-spinner');
+            const mediaInput = document.getElementById('media');
+            const imagePreviewContainer = document.getElementById('image-preview-container');
+
+            if (mediaInput) {
+                mediaInput.addEventListener('change', () => {
+                    imagePreviewContainer.innerHTML = ''; // Clear previous previews
+                    const files = mediaInput.files;
+                    if (files.length > 0) {
+                        for (const file of files) {
+                            if (file.type.startsWith('image/')) {
+                                const reader = new FileReader();
+                                reader.onload = (e) => {
+                                    const img = document.createElement('img');
+                                    img.src = e.target.result;
+                                    img.className = 'w-full h-24 object-cover rounded-lg';
+                                    imagePreviewContainer.appendChild(img);
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        }
+                    }
+                });
+            }
 
             if (uploadForm) {
                 uploadForm.addEventListener('submit', async (e) => {
@@ -939,21 +957,58 @@
             }
 
             // GALLERY LIGHTBOX
-            const galleryItems = document.querySelectorAll('.gallery-item');
-            const lightbox = document.getElementById('lightbox'), lightboxImg = document.getElementById('lightbox-img'), lightboxClose = document.getElementById('lightbox-close');
-            galleryItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    lightbox.classList.remove('hidden');
-                    lightboxImg.src = item.src;
-                    document.body.style.overflow = 'hidden';
-                });
-            });
-            const closeLightbox = () => {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxPrev = document.getElementById('lightbox-prev');
+            const lightboxNext = document.getElementById('lightbox-next');
+            const lightboxCounter = document.getElementById('lightbox-counter');
+
+            let currentLightboxImages = [];
+            let currentIndex = 0;
+
+            function showLightbox(images, index) {
+                currentLightboxImages = images;
+                currentIndex = index;
+                updateLightbox();
+                lightbox.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function updateLightbox() {
+                lightboxImg.src = currentLightboxImages[currentIndex];
+                lightboxCounter.textContent = `${currentIndex + 1} / ${currentLightboxImages.length}`;
+                lightboxPrev.classList.toggle('hidden', currentLightboxImages.length <= 1);
+                lightboxNext.classList.toggle('hidden', currentLightboxImages.length <= 1);
+            }
+
+            function closeLightbox() {
                 lightbox.classList.add('hidden');
                 document.body.style.overflow = 'auto';
-            };
+                currentLightboxImages = [];
+                currentIndex = 0;
+            }
+
+            lightboxPrev.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + currentLightboxImages.length) % currentLightboxImages.length;
+                updateLightbox();
+            });
+
+            lightboxNext.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % currentLightboxImages.length;
+                updateLightbox();
+            });
+
             lightboxClose.addEventListener('click', closeLightbox);
             lightbox.addEventListener('click', (e) => e.target === lightbox && closeLightbox());
+
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            galleryItems.forEach((item, index) => {
+                item.addEventListener('click', () => {
+                    const imageUrls = Array.from(galleryItems).map(i => i.src);
+                    showLightbox(imageUrls, index);
+                });
+            });
 
             // ACCOUNT NUMBER COPY BUTTON
             const copyBtn = document.getElementById('copy-btn');
