@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const noPhotosElement = document.getElementById('no-uploaded-photos');
 
             if (loadingElement) {
-                loadingElement.remove();
+                loadingElement.classList.add('hidden');
             }
 
             if (result.success && result.data.media.length > 0) {
